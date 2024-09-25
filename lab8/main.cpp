@@ -1,9 +1,9 @@
-// поразрядная сортировка
+// РїРѕСЂР°Р·СЂСЏРґРЅР°СЏ СЃРѕСЂС‚РёСЂРѕРІРєР°
 #include <iostream>
 #include <vector>
 
 
-int nl(int x) {	// число разрядов в числе
+int nl(int x) {	// С‡РёСЃР»Рѕ СЂР°Р·СЂСЏРґРѕРІ РІ С‡РёСЃР»Рµ
 	size_t len = 0;
 	while (x > 0) {
 		x /= 10;
@@ -12,7 +12,7 @@ int nl(int x) {	// число разрядов в числе
 	return len;
 }
 
-int digt(int x, size_t place) {	// цифра в разряде
+int digt(int x, size_t place) {	// С†РёС„СЂР° РІ СЂР°Р·СЂСЏРґРµ
 	for (size_t i = 1; i < place; i++) {
 		if (x > 0) x /= 10;
 		else return 0;
@@ -34,12 +34,12 @@ int main() {
 	for (size_t i = 0; i < len; i++)
 		max_len = nl(arr[i]) > max_len ? max_len = nl(arr[i]) : max_len;
 	for (size_t pl = 0; pl < max_len; pl++) {
-		std::vector<int> base[10];	// создание и заполнения массива элементами по цифре в их текущем разряде
+		std::vector<int> base[10];	// СЃРѕР·РґР°РЅРёРµ Рё Р·Р°РїРѕР»РЅРµРЅРёСЏ РјР°СЃСЃРёРІР° СЌР»РµРјРµРЅС‚Р°РјРё РїРѕ С†РёС„СЂРµ РІ РёС… С‚РµРєСѓС‰РµРј СЂР°Р·СЂСЏРґРµ
 		for (size_t i = 0; i < len; i++) {
 			base[digt(arr[i], pl)].push_back(arr[i]);
 		}
 		size_t cntr = 0;
-		for (size_t i = 0; i < 10; i++) {	// запись по новому порядку в исходный массив
+		for (size_t i = 0; i < 10; i++) {	// Р·Р°РїРёСЃСЊ РїРѕ РЅРѕРІРѕРјСѓ РїРѕСЂСЏРґРєСѓ РІ РёСЃС…РѕРґРЅС‹Р№ РјР°СЃСЃРёРІ
 			for (size_t j = 0; j < base[i].size(); j++) {
 				arr[cntr] = base[i][j];
 				cntr++;
