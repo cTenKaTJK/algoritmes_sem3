@@ -1,8 +1,8 @@
-// сортировка пиармидой (бинарная куча)
+// СЃРѕСЂС‚РёСЂРѕРІРєР° РїРёР°СЂРјРёРґРѕР№ (Р±РёРЅР°СЂРЅР°СЏ РєСѓС‡Р°)
 #include <iostream>
 
 
-void heaping(int arr[], size_t len, size_t i) {	// построение ветви бинарного дерева
+void heaping(int arr[], size_t len, size_t i) {	// РїРѕСЃС‚СЂРѕРµРЅРёРµ РІРµС‚РІРё Р±РёРЅР°СЂРЅРѕРіРѕ РґРµСЂРµРІР°
 	size_t max_id = i;
 	int left = 2 * i + 1;
 	int right = 2 * i + 2;
@@ -13,7 +13,7 @@ void heaping(int arr[], size_t len, size_t i) {	// построение ветви бинарного де
 		max_id = right;
 	if (max_id != i) {
 		std::swap(arr[i], arr[max_id]);
-		heaping(arr, len, max_id);	// рекурсия
+		heaping(arr, len, max_id);	// СЂРµРєСѓСЂСЃРёСЏ
 	}
 }
 
@@ -27,11 +27,11 @@ int main() {
 	for (size_t i = 0; i < len; i++)
 		std::cin >> arr[i];
 
-	for (int i = len / 2 - 1; i >= 0; i--)	// изначальная куча
+	for (int i = len / 2 - 1; i >= 0; i--)	// РёР·РЅР°С‡Р°Р»СЊРЅР°СЏ РєСѓС‡Р°
 		heaping(arr, len, i);
 	for (int i = len - 1; i >= 0; i--){
 		std::swap(arr[0], arr[i]);
-		heaping(arr, i, 0);	// построение более маленьких подкуч
+		heaping(arr, i, 0);	// РїРѕСЃС‚СЂРѕРµРЅРёРµ Р±РѕР»РµРµ РјР°Р»РµРЅСЊРєРёС… РїРѕРґРєСѓС‡
 	}
 
 	for (size_t i = 0; i < len; i++)
