@@ -43,8 +43,8 @@ int main() {
 			scopes.pop_back();
 	}
 
-	if (scopes.size() != 0) std::cout << "WRONG\n";
-	else std::cout << "RIGHT!\n";
+	if (scopes.size() != 0) std::cout << "Строка существует\n";
+	else std::cout << "Строка не существует\n";
 
 	return 0;
 }
