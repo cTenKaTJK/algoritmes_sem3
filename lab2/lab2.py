@@ -1,4 +1,4 @@
-def is_brackets_correct(line):
+def brackets_check(line):
     brackets = []
     bracket_pairs = {')': '(', '}': '{', ']': '['}
     for sym in line:
@@ -79,8 +79,7 @@ def evaluate_pol(rpn):
 def evaluate(expression):
     expression = expression.replace('=', '')
 
-    # Проверка скобок
-    if not is_brackets_correct(expression):
+    if not brackets_check(expression):
         print("Некорректные скобки в выражении")
         return
 
