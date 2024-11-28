@@ -13,42 +13,37 @@ def is_brackets_correct(line):
     return len(brackets) == 0
 
 
-def to_polish(mth_ex):
-    precedence = {'+': 1, '-': 1, '*': 2, '/': 2}
-    output = []
-    operators = []
-    i = 0
+def to_polish(expression):
+    opers = {'+': 1, '-': 1, '*': 2, '/': 2}    #определение приоритета оператора
+    output, operators, i = [], [], 0
 
-    while i < len(mth_ex):
-        char = mth_ex[i]
+    while i < len(expression):
+        sym = expression[i]
 
-        # Распознаем отрицательные числа
-        if char == '-' and (i == 0 or mth_ex[i - 1] in '(-+*/'):
-            number = char
+        if sym == '-' and (i == 0 or expression[i - 1] in '(-+*/'):
+            number = sym
             i += 1
-            while i < len(mth_ex) and mth_ex[i].isdigit():
-                number += mth_ex[i]
+            while i < len(expression) and expression[i].isdigit():
+                number += expression[i]
                 i += 1
             output.append(number)
             continue
 
-        if char.isdigit():
-            number = char
-            while i + 1 < len(mth_ex) and mth_ex[i + 1].isdigit():
+        if sym.isdigit():
+            number = sym
+            while i + 1 < len(expression) and expression[i + 1].isdigit():
                 i += 1
-                number += mth_ex[i]
+                number += expression[i]
             output.append(number)
-        elif char in precedence:
-            while (operators and operators[-1] in precedence and
-                   precedence[operators[-1]] >= precedence[char]):
+        elif sym in opers:
+            while (operators and operators[-1] in opers and opers[operators[-1]] >= opers[sym]):
                 output.append(operators.pop())
-            operators.append(char)
-        elif char == '(':
-            operators.append(char)
-        elif char == ')':
+            operators.append(sym)
+        elif sym == '(':
+            operators.append(sym)
+        elif sym == ')':
             while operators and operators[-1] != '(':
                 output.append(operators.pop())
-            operators.pop()  # удаляем '('
         i += 1
 
     while operators:
@@ -57,48 +52,45 @@ def to_polish(mth_ex):
     return output
 
 
-def evaluate_rpn(rpn):
+def evaluate_pol(rpn):
     stack = []
-
-    for token in rpn:
-        if token.lstrip('-').isdigit():  # Учитываем отрицательные числа
-            stack.append(int(token))
+    for sigh in rpn:
+        if sigh.lstrip('-').isdigit():
+            stack.append(int(sigh))
         else:
             b = stack.pop()
             a = stack.pop()
 
-            if token == '+':
-                stack.append(a + b)
-            elif token == '-':
-                stack.append(a - b)
-            elif token == '*':
-                stack.append(a * b)
-            elif token == '/':
-                if b == 0:
-                    raise ZeroDivisionError("Деление на ноль")
-                stack.append(a / b)
+            match sigh:
+                case '+':
+                    stack.append(a + b)
+                case '-':
+                    stack.append(a - b)
+                case '*':
+                    stack.append(a * b)
+                case '/':
+                    if b == 0:
+                        raise ZeroDivisionError("деление на ноль")
+                    stack.append(a / b)
 
     return stack[0]
 
 
-def evaluate_expression(mth_ex):
-    mth_ex = mth_ex.replace('=', '')
+def evaluate(expression):
+    expression = expression.replace('=', '')
 
     # Проверка скобок
-    if not is_brackets_correct(mth_ex):
+    if not is_brackets_correct(expression):
         print("Некорректные скобки в выражении")
         return
 
     try:
-        rpn = to_rpn(mth_ex)
-        result = evaluate_rpn(rpn)
+        rpn = to_polish(expression)
+        result = evaluate_pol(rpn)
         print("Результат:", result)
-    except ZeroDivisionError as e:
-        print(e)
-    except Exception as e:
-        print("Ошибка:", e)
+    except ZeroDivisionError:
+        print(ZeroDivisionError)
 
 
 if __name__ == '__main__':
-    expression = input("Введите математическое выражение: ")
-    evaluate_expression(expression)
+    evaluate(input("Введите пример: "))
