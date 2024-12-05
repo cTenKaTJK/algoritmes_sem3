@@ -114,7 +114,7 @@ namespace stc{
         int cap;
         T* value;
     public:
-        stack() : sz(0), cap(0), data(0) {}
+        stack() : sz(0), cap(0), value(0) {}
 
         ~stack() {
             delete[] value;
